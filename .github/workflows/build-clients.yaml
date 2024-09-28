@@ -1,0 +1,84 @@
+name: Build OpenAPI Client
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+    - uses: dart-lang/setup-dart@v1
+      with:
+        sdk: '3.3'
+
+    - name: Set Git Email
+      run: git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+
+
+    - name: Set Git Name
+      run: git config --global user.name "Alex-web0"
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Install OpenAPI Generator
+      run: npm install @openapitools/openapi-generator-cli -g
+
+    - name: Set OpenAPI Generator Version
+      run: openapi-generator-cli version-manager set 7.4.0
+
+    - name: Generate OpenAPI Document
+      run: php artisan openapi:generate > openapi.json
+
+    - name: Generate dart-dio Client
+      run: openapi-generator-cli generate -g dart-dio -i openapi.json -o openapi/clients/dart-dio --git-user-id speedo-project --git-repo-id brandyol_dart_client --git-host github.com
+
+    - name: Build dart files
+      run: (cd openapi/clients/dart-dio; command dart run build_runner build)
+
+    - name: Clone dart-dio Client Repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.CLIENT_DART_REPO_PAT }}
+        repository: Alex-web0/brandyol_dart_client
+        path: brandyol_dart_client
+
+    - name: Make New Branch in dart-dio Client Repository
+      run: (cd "brandyol_dart_client"; git checkout -b "release-$(date +%s)" main)
+
+    - name: Clean dart-dio Client Repository
+      run: rm -r -f -v brandyol_dart_client/*
+
+    - name: Copy Generated Client to dart-dio Client Repository
+      run: cp -R "openapi/clients/dart-dio/." brandyol_dart_client/
+
+    - name: Commit Changes to dart-dio Client Repository
+      run: (cd "brandyol_dart_client"; git add -A || true; git commit -am "autogen&#58; regenerate OpenAPI client" || true)
+
+    - name: Push Changes to dart-dio Client Repository
+      run: (cd "brandyol_dart_client"; git push origin --tags HEAD:main)
