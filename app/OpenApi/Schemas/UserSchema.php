@@ -27,7 +27,7 @@ class UserSchema extends SchemaFactory implements Reusable
 
                 Schema::string('full_name')->required(),
                 Schema::string('phone_number')->required(),
-                Schema::string('gender')->enum('male', 'female', 'other')->required(),
+                Schema::string('gender')->enum(['male', 'female', 'other'])->required(),
                 Schema::string('role')->enum(config('roles'))->required(),
                 Schema::string('android_token'),
                 Schema::string('ios_token'),
