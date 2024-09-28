@@ -39,7 +39,11 @@ class AuthController extends Controller
      * Authenticate by otp for user login.
      */
     #[OA\Operation(tags: ['user'], method: 'POST')]
-    // #[OA\Response()]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
+    #[OA\Response(factory: ForbiddenResponse::class, statusCode: 403)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    #[OA\Response(factory: PasswordLoginResponse::class, statusCode: 200)]
     public function otpLogin(Request $request)
     {
         $request->validate([
