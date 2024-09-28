@@ -91,9 +91,6 @@ jobs:
     - name: Generate typescript-axios Client
       run: openapi-generator-cli generate -g typescript-axios -i openapi.json -o openapi/clients/typescript-axios --git-user-id Alex-web0 --git-repo-id brandyol_react_client --git-host github.com
 
-    - name: Build dart files
-      run: (cd openapi/clients/typescript-axios; command dart run build_runner build)
-
     - name: Clone typescript-axios Client Repository
       uses: actions/checkout@v3
       with:
