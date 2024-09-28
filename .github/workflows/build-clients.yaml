@@ -56,7 +56,7 @@ jobs:
       run: php artisan openapi:generate > openapi.json
 
     - name: Generate dart-dio Client
-      run: openapi-generator-cli generate -g dart-dio -i openapi.json -o openapi/clients/dart-dio --git-user-id speedo-project --git-repo-id brandyol_dart_client --git-host github.com
+      run: openapi-generator-cli generate -g dart-dio -i openapi.json -o openapi/clients/dart-dio --git-user-id Alex-web0 --git-repo-id brandyol_dart_client --git-host github.com
 
     - name: Build dart files
       run: (cd openapi/clients/dart-dio; command dart run build_runner build)
