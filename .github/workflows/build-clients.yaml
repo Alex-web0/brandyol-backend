@@ -66,6 +66,7 @@ jobs:
       with:
         token: ${{ secrets.CLIENT_DART_REPO_PAT || github.token}}
         repository: Alex-web0/brandyol_dart_client
+        ref: main
         path: brandyol_dart_client
 
     - name: Make New Branch in dart-dio Client Repository
