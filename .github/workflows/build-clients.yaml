@@ -64,7 +64,7 @@ jobs:
     - name: Clone dart-dio Client Repository
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.CLIENT_DART_REPO_PAT }}
+        token: ${{ secrets.CLIENT_DART_REPO_PAT || github.token}}
         repository: Alex-web0/brandyol_dart_client
         path: brandyol_dart_client
 
