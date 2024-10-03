@@ -7,7 +7,7 @@ return [
     // manager which has access to everything but sensitive details
     'manager',
 
-    // ANY App User
+    // ANY App User -
     'customer'
 
 ];
