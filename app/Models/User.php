@@ -57,19 +57,19 @@ class User extends Authenticatable
         ];
     }
 
-    public function is_customer(): bool
+    public function is_customer_account(): bool
     {
 
         return $this->role == 'customer';
     }
 
-    public function is_admin(): bool
+    public function is_admin_account(): bool
     {
 
         return $this->role == 'admin';
     }
 
-    public function is_manager(): bool
+    public function is_manager_account(): bool
     {
 
         return $this->role == 'manager';
@@ -78,7 +78,7 @@ class User extends Authenticatable
     public function is_staff(): bool
     {
 
-        return $this->is_manager() || $this->is_admin();
+        return $this->is_manager_account() || $this->is_admin_account();
     }
 
     public function is_banned(): bool

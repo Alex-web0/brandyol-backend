@@ -93,7 +93,7 @@ class AuthController extends Controller
 
 
             /// check user is a customer as they are only allowed to use otp login
-            if (!$user->is_customer) {
+            if (!$user->is_customer_account()) {
                 return response()->json(
                     [
                         'message' => 'can not login with otp if not a customer'
@@ -168,7 +168,7 @@ class AuthController extends Controller
             }
 
             /// check user is a customer as they are only allowed to use otp login
-            if ($user->is_customer) {
+            if ($user->is_customer_account()) {
                 return response()->json(
                     [
                         'message' => 'can not login with password if a customer'
@@ -198,6 +198,7 @@ class AuthController extends Controller
                 'token_type' => 'Bearer',
             ], 200);
         } catch (\Exception $e) {
+            error_log($e);
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);

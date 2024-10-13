@@ -12,7 +12,7 @@ class BanUserRequest extends FormRequest
      */
     public function authorize(Request $request): bool
     {
-        return $request->user()->is_admin();
+        return $request->user()->is_admin_account();
     }
 
     /**
