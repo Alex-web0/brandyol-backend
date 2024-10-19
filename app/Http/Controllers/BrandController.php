@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use App\OpenApi\Parameters\GetBrandsParameters;
+use App\OpenApi\Parameters\IDPathParameters;
 use App\OpenApi\RequestBodies\CreateBrandRequestBody;
 use App\OpenApi\Responses\EmptyResponse;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
@@ -132,6 +133,7 @@ class BrandController extends Controller
      */
     #[OA\Operation(tags: ['brands'], security: BearerTokenSecurityScheme::class)]
     #[OA\RequestBody(factory: CreateBrandRequestBody::class)]
+    #[OA\Parameters(IDPathParameters::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
@@ -156,6 +158,7 @@ class BrandController extends Controller
      * removes brand
      */
     #[OA\Operation(tags: ['brands'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(IDPathParameters::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]

@@ -9,6 +9,7 @@ use App\OpenApi\RequestBodies\StartCampaignRequestBody;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
 use App\OpenApi\Responses\NotFoundResponse;
+use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
 #[OA\PathItem]
@@ -35,7 +36,7 @@ class MarketingCampaignController extends Controller
      *
      * Create A Campaign
      */
-    #[OA\Operation(tags: ['campaigns'])]
+    #[OA\Operation(tags: ['campaigns'], security: BearerTokenSecurityScheme::class)]
     #[OA\RequestBody(factory: StartCampaignRequestBody::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
