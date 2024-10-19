@@ -3,10 +3,12 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FileAttachmentController;
+use App\Http\Controllers\MarketingCampaignController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserBanController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\CheckRole;
+use App\Models\MarketingCampaign;
 use Illuminate\Support\Facades\Route;
 
 
@@ -87,6 +89,15 @@ Route::prefix('v1')->group(function () {
     Route::prefix('states')->group(
         function () {
             Route::get('/', [StateController::class, 'index']);
+        }
+    );
+
+
+
+    /* =======================  MARKETING CAMPAIGNS  ======================= */
+    Route::prefix('campaigns')->group(
+        function () {
+            Route::post('/', [MarketingCampaignController::class, 'store']);
         }
     );
 });
