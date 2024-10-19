@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FileAttachmentController;
 use App\Http\Controllers\MarketingCampaignController;
@@ -89,6 +90,17 @@ Route::prefix('v1')->group(function () {
     Route::prefix('states')->group(
         function () {
             Route::get('/', [StateController::class, 'index']);
+        }
+    );
+
+
+    /* =======================  BRANDS  ======================= */
+    Route::prefix('brands')->middleware('auth:sanctum')->group(
+        function () {
+            Route::get('/', [BrandController::class, 'index']);
+            Route::post('/', [BrandController::class, 'store']);
+            Route::put('/{id}', [BrandController::class, 'update']);
+            Route::delete('/{id}', [BrandController::class, 'destroy']);
         }
     );
 

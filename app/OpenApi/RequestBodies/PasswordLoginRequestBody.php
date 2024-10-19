@@ -21,7 +21,7 @@ class PasswordLoginRequestBody extends RequestBodyFactory
             )->examples(
                 Example::create('Default')->value(
                     [
-                        'phone_number' => '+9647731001529',
+                        'phone_number' => '+9647701001000',
                         'password' => 'password',
                     ]
                 )

@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             UserSeeder::class,
 
+            BrandSeeder::class,
+
             ProductSeeder::class,
 
             ProductSeeder::class,
