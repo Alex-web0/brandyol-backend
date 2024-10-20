@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
 
             BrandSeeder::class,
+            ColorSchemeSeeder::class,
 
             ProductSeeder::class,
 
-            ProductSeeder::class,
 
         ]);
     }

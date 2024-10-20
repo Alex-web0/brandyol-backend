@@ -4,22 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreColorSchemeRequest;
 use App\Http\Requests\UpdateColorSchemeRequest;
+use App\Http\Resources\ColorSchemeResource;
 use App\Models\ColorScheme;
+use App\OpenApi\Parameters\GetColorSchemesParameters;
+use App\OpenApi\Parameters\IDPathParameters;
+use App\OpenApi\RequestBodies\CreateColorSchemeRequestBody;
 use App\OpenApi\RequestBodies\StartCampaignRequestBody;
+use App\OpenApi\RequestBodies\UpdateColorSchemeRequestBody;
+use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
 use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
+use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
 #[OA\PathItem]
 class ColorSchemeController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Fetch all color schemes
+     *
      */
-    public function index()
+    #[OA\Operation(tags: ['color-schemes'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(factory: GetColorSchemesParameters::class)]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    public function index(Request $request)
     {
-        //
+        $query = ColorScheme::query();
+        if (!empty($request->name)) {
+            $query = $query->where('name', 'like', '%' .  $request->name . '%');
+        }
+
+        if (!empty($request->color)) {
+            $query = $query->where('color', '=',  $request->color);
+        }
+
+
+
+        return ColorSchemeResource::collection($query->paginate($request->per_page));
     }
 
 
@@ -28,13 +53,21 @@ class ColorSchemeController extends Controller
      *
      * Color scheme creation
      */
-    #[OA\Operation(tags: ['campaigns'], security: BearerTokenSecurityScheme::class)]
-    #[OA\RequestBody(factory: StartCampaignRequestBody::class)]
+    #[OA\Operation(tags: ['color-schemes'], security: BearerTokenSecurityScheme::class)]
+    #[OA\RequestBody(factory: CreateColorSchemeRequestBody::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     public function store(StoreColorSchemeRequest $request)
     {
-        //
+        ColorScheme::create([
+            'color' => $request->color,
+            'name' => $request->name,
+            'name_kr' => $request->name_kr,
+
+        ]);
+
+        return response()->json(null);
     }
 
     /**
@@ -45,20 +78,56 @@ class ColorSchemeController extends Controller
         //
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Updates a color scheme
+     *
+     * Color scheme update
      */
-    public function update(UpdateColorSchemeRequest $request, ColorScheme $colorScheme)
+    #[OA\Operation(tags: ['color-schemes'], security: BearerTokenSecurityScheme::class)]
+    #[OA\RequestBody(factory: UpdateColorSchemeRequestBody::class)]
+    #[OA\Parameters(IDPathParameters::class)]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    public function update($id, UpdateColorSchemeRequest $request, ColorScheme $colorScheme)
     {
-        //
+
+        ColorScheme::findOrFail($id)->update(
+            [
+                'color' => $request->color,
+                'name' => $request->name,
+                'name_kr' => $request->name_kr,
+            ]
+        );
+
+        return response()->json(null);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Updates a color scheme
+     *
+     * Color scheme update
      */
+    #[OA\Operation(tags: ['color-schemes'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(IDPathParameters::class)]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     public function destroy(ColorScheme $colorScheme)
     {
-        //
+        /// if has association with products if any it will fail
+        if ($colorScheme->products()->count() > 0) {
+            return response(
+                [
+                    'message' => 'Can not delete item with children',
+                ],
+                422
+            );
+        } else {
+            ColorScheme::destroy($colorScheme->id);
+        }
+
+
+        return response()->json(null);
     }
 }

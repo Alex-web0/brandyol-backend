@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ColorSchemeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FileAttachmentController;
 use App\Http\Controllers\MarketingCampaignController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserBanController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\CheckRole;
+use App\Models\ColorScheme;
 use App\Models\MarketingCampaign;
 use Illuminate\Support\Facades\Route;
 
@@ -101,6 +103,16 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [BrandController::class, 'store']);
             Route::put('/{id}', [BrandController::class, 'update']);
             Route::delete('/{id}', [BrandController::class, 'destroy']);
+        }
+    );
+
+    /* =======================  COLOR SCHEMES  ======================= */
+    Route::prefix('color-schemes')->middleware('auth:sanctum')->group(
+        function () {
+            Route::get('/', [ColorSchemeController::class, 'index']);
+            Route::post('/', [ColorSchemeController::class, 'store']);
+            Route::put('/{id}', [ColorSchemeController::class, 'update']);
+            Route::delete('/{id}', [ColorSchemeController::class, 'destroy']);
         }
     );
 

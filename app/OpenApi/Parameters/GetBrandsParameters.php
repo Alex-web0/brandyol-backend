@@ -25,11 +25,7 @@ class GetBrandsParameters extends ParametersFactory
                 ->description('The order amount')
                 ->required(false)
                 ->schema(Schema::string()->enum('desc', 'asc')),
-            Parameter::query()
-                ->name('per_page')
-                ->description('per page')
-                ->required(false)
-                ->schema(Schema::integer()),
+            ...(new PaginationParameters())->build(),
             Parameter::query()
                 ->name('name')
                 ->description('name of brand')
