@@ -27,7 +27,7 @@ class ErrorValidationResponse extends ResponseFactory
                 MediaType::json()->schema($response)->examples(
                     Example::create('default')->value(
                         [
-                            'message' => ['Something is wrong with this field!']
+                            'message' => 'Something is wrong with this field!'
                         ]
                     )
                 )
