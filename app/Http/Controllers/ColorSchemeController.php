@@ -9,10 +9,10 @@ use App\Models\ColorScheme;
 use App\OpenApi\Parameters\GetColorSchemesParameters;
 use App\OpenApi\Parameters\IDPathParameters;
 use App\OpenApi\RequestBodies\CreateColorSchemeRequestBody;
-use App\OpenApi\RequestBodies\StartCampaignRequestBody;
 use App\OpenApi\RequestBodies\UpdateColorSchemeRequestBody;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
+use App\OpenApi\Responses\GetColorSchemesResponse;
 use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Illuminate\Http\Request;
@@ -31,6 +31,7 @@ class ColorSchemeController extends Controller
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    #[OA\Response(factory: GetColorSchemesResponse::class, statusCode: 200)]
     public function index(Request $request)
     {
         $query = ColorScheme::query();
@@ -106,24 +107,26 @@ class ColorSchemeController extends Controller
     /**
      * Updates a color scheme
      *
-     * Color scheme update
+     * Color scheme deletion
      */
     #[OA\Operation(tags: ['color-schemes'], security: BearerTokenSecurityScheme::class)]
     #[OA\Parameters(IDPathParameters::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
-    public function destroy(ColorScheme $colorScheme)
+    public function destroy($id)
     {
+        $colorScheme = ColorScheme::findOrFail($id);
         /// if has association with products if any it will fail
         if ($colorScheme->products()->count() > 0) {
             return response(
                 [
-                    'message' => 'Can not delete item with children',
+                    'message' => __('errors.delete_item_with_children'),
                 ],
                 422
             );
         } else {
+
             ColorScheme::destroy($colorScheme->id);
         }
 
