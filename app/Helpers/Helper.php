@@ -58,4 +58,16 @@ class Helper
     {
         return (new PhoneNumber($number, config('phone_number.accepted')))->formatE164();
     }
+
+
+    /// for un-implemented functionality
+    static public function responseNotImplemented()
+    {
+        return response()->json(
+            [
+                'message' => __('errors.not_implemented'),
+                500,
+            ]
+        );
+    }
 }
