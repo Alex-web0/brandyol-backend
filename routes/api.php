@@ -6,6 +6,8 @@ use App\Http\Controllers\ColorSchemeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\FileAttachmentController;
 use App\Http\Controllers\MarketingCampaignController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductFeatureController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserBanController;
 use App\Http\Controllers\UsersController;
@@ -116,6 +118,35 @@ Route::prefix('v1')->group(function () {
         }
     );
 
+
+
+    /* =======================  PRODUCT FEATURES  ======================= */
+    Route::prefix('product-features')->middleware('auth:sanctum')->group(
+        function () {
+            Route::get('/', [ProductFeatureController::class, 'index']);
+            Route::post('/', [ProductFeatureController::class, 'store']);
+            Route::put('/{id}', [ProductFeatureController::class, 'update']);
+            Route::delete('/{id}', [ProductFeatureController::class, 'destroy']);
+        }
+    );
+
+
+    /* =======================  PRODUCTS  ======================= */
+    Route::prefix('products')->middleware('auth:sanctum')->group(
+        function () {
+            // gets all the products 
+            Route::get('/', [ProductController::class, 'index']);
+
+            // role checked
+            Route::middleware([CheckRole::class . 'admin'])->group(
+                function () {
+                    Route::post('/', [ProductController::class, 'store']);
+                    Route::put('/{id}', [ProductController::class, 'update']);
+                    Route::delete('/{id}', [ProductController::class, 'destroy']);
+                }
+            );
+        }
+    );
 
 
     /* =======================  MARKETING CAMPAIGNS  ======================= */
