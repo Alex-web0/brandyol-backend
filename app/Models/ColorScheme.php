@@ -15,6 +15,6 @@ class ColorScheme extends Model
 
     public function products(): HasMany
     {
-        throw "";
+        return $this->hasMany(Product::class);
     }
 }
