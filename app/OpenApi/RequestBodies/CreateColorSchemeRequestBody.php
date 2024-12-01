@@ -13,7 +13,7 @@ class CreateColorSchemeRequestBody extends RequestBodyFactory implements Reusabl
 {
     public function build(): RequestBody
     {
-        return RequestBody::create()->content(
+        return RequestBody::create('createColorScheme')->content(
             MediaType::json()->schema(
                 ColorSchemeSchema::ref()
             )->examples(
