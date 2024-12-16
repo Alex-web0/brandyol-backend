@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class StoreFileAttachmentRequest extends FormRequest
+class UpdateProductFeatureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,6 @@ class StoreFileAttachmentRequest extends FormRequest
     {
         return $request->user()->is_admin_account();
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,9 +22,8 @@ class StoreFileAttachmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file',
-            'owner_id' => 'required|numeric|string',
-            'owner_type' => 'required|string'
+            'title' => 'string|required',
+            'value' => 'string|required',
         ];
     }
 }

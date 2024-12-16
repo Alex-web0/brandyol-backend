@@ -81,6 +81,13 @@ class User extends Authenticatable
         return $this->is_manager_account() || $this->is_admin_account();
     }
 
+    public function is_staff_account(): bool
+    {
+
+        return $this->is_staff();
+    }
+
+
     public function is_banned(): bool
     {
 

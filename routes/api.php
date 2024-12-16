@@ -78,6 +78,7 @@ Route::prefix('v1')->group(function () {
         function () {
             Route::get('/', [FileAttachmentController::class, 'index']);
             Route::post('/upload', [FileAttachmentController::class, 'store']);
+            Route::post('/update/{id}', [FileAttachmentController::class, 'update']);
             Route::delete('/delete/{id}', [FileAttachmentController::class, 'destroy']);
         }
     );
@@ -138,7 +139,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [ProductController::class, 'index']);
 
             // role checked
-            Route::middleware([CheckRole::class . 'admin'])->group(
+            Route::middleware([CheckRole::class . ':admin'])->group(
                 function () {
                     Route::post('/', [ProductController::class, 'store']);
                     Route::put('/{id}', [ProductController::class, 'update']);

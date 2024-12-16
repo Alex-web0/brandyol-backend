@@ -11,6 +11,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "marvinlabs/laravel-discord-logger": "^1.4",
         "nextapps/laravel-swagger-ui": "^0.10.1",
         "propaganistas/laravel-phone": "^5.3",
         "tartanlegrand/laravel-openapi": "^2.0"

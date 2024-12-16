@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,7 +32,12 @@ class FileAttachment extends Model
 
     public function url(): string
     {
-        return Storage::disk()->temporaryUrl($this->path, now()->addMinutes(30));
+        try {
+            return Storage::disk()->temporaryUrl($this->path, now()->addMinutes(30));
+        } catch (Exception $e) {
+            report($e);
+            return   Helper::$placeholderImageUrl;
+        }
     }
 
     public function user(): BelongsTo

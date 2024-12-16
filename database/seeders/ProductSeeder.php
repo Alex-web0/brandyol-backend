@@ -16,37 +16,63 @@ class ProductSeeder extends Seeder
         $products = [
             [
                 'id' => 1,
-                'user_id' => 4,
-                'product_category_id' => 1,
-                'name' => "اقلام المتنبي حجم كبير درزن",
-                'description' => "درزن اقلام يحتوي ١٢ قلم من حجم  H2 سريع الكتابة و بخشب متين",
+                'brand_id' => 1,
+                'color_scheme_id' => 1,
+                'user_id' => 1,
+                'file_attachment_id' => 1,
+                'name' => "اقلام مكياج حجم كبير درزن",
+                'name_kr' => "pens of makeup",
+                'description' => "درزن اقلام يحتوي ١٢  و بخشب متين",
                 'cost' => 2000,
                 'price' => 2750,
                 'discount' => null,
-                'status' => 'active',
+                // 'status' => 'active',
                 'stock' => 100,
-            ]
+                'is_available' => true,
+            ],
+
+            [
+                'id' => 2,
+                'brand_id' => 1,
+                'user_id' => 1,
+                'color_scheme_id' => 2,
+                'file_attachment_id' => 1,
+                'name' => "اقلام مكياج حجم كبير درزن",
+                'name_kr' => "pens of makeup",
+                'description' => "درزن اقلام يحتوي ١٢  و بخشب متين",
+                'cost' => 2000,
+                'price' => 2750,
+                'discount' => null,
+                // 'status' => 'active',
+                'stock' => 100,
+                'is_available' => true,
+            ],
         ];
 
 
         foreach ($products as $p) {
-            // Product::updateOrCreate(
-            //     [
-            //         'id' => $p['id'],
-            //     ],
-            //     [
-            //         'id' => $p['id'],
-            //         'user_id' => $p['user_id'],
-            //         'product_category_id' => $p['product_category_id'],
-            //         'name' => $p['name'],
-            //         'description' => $p['description'],
-            //         'cost' => $p['cost'],
-            //         'price' => $p['price'],
-            //         'discount' => $p['discount'],
-            //         'status' => $p['status'],
-            //         'stock' => $p['stock'],
-            //     ],
-            // );
+            Product::updateOrCreate(
+                [
+                    'id' => $p['id'],
+                ],
+                [
+                    'id' => $p['id'],
+                    'user_id' => $p['user_id'],
+                    'brand_id' => $p['brand_id'],
+                    'color_scheme_id' => $p['color_scheme_id'],
+                    'file_attachment_id' => $p['file_attachment_id'],
+                    'name' => $p['name'],
+                    'name_kr' => $p['name_kr'],
+                    'description' => $p['description'],
+                    'cost' => $p['cost'],
+                    'price' => $p['price'],
+                    'cost' => $p['cost'],
+                    'discount' => $p['discount'],
+                    // 'status' => $p['status'],
+                    'stock' => $p['stock'],
+                    'is_available' => $p['is_available'],
+                ],
+            );
         }
     }
 }

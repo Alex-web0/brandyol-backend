@@ -3,9 +3,14 @@
 namespace App\Helpers;
 
 use App\Models\PrePaidCard;
+use App\OpenApi\Schemas\ProductSchema;
 use Carbon\Carbon;
+use Exception;
+use GoldSpecDigital\ObjectOrientedOAS\Contracts\SchemaContract;
+use GoldSpecDigital\ObjectOrientedOAS\Objects\Schema;
 use Illuminate\Support\Facades\Storage;
 use Propaganistas\LaravelPhone\PhoneNumber;
+use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
 
 class Helper
 {
@@ -18,6 +23,21 @@ class Helper
 
         // Optionally, store the file path in your database or return it as a response
         return $urlPath;
+    }
+
+
+    /**
+     * Removes a file with path from default storage disk
+     * -------------
+     * Will throw Exception on any errors
+     */
+    static public function removeFileFromStorage($path): void
+    {
+        $didRemove = Storage::disk()->delete($path);
+
+        if (!$didRemove) throw new Exception("Failed to remove file with path {$path} from default storage...");
+
+        return;
     }
 
 
@@ -66,8 +86,37 @@ class Helper
         return response()->json(
             [
                 'message' => __('errors.not_implemented'),
-                500,
-            ]
+            ],
+            500
         );
     }
+
+
+
+    /// OPEN API
+    /*
+    * Will merge all properties of given schema instances, MUST BE OF SCHEMA OF OBJECTS
+    */
+    static public function mergeSchemas(SchemaFactory ...$schemas)
+    {
+        $finalContracts = [];
+
+        foreach ($schemas as $s) {
+            $finalContracts = [
+                ...$finalContracts,
+                ...($s)->build()->properties,
+            ];
+        }
+
+        return Schema::object('body')->properties(
+            ...$finalContracts
+        );
+    }
+
+
+    /// Discount 
+    static public string $getDiscountValidator = 'numeric|nullable|min:0.0|max:1.0';
+
+    /// Image Place holder
+    static public string $placeholderImageUrl = 'https://placehold.co/600x400/EEE/31343C?font=raleway&text=Error';
 }

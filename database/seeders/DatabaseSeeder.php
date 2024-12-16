@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\ContactMethod;
+use App\Models\FileAttachment;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,10 +23,16 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             UserSeeder::class,
 
+            FileAttachment::class,
+
             BrandSeeder::class,
             ColorSchemeSeeder::class,
 
+
+
+            /// Product specific area
             ProductSeeder::class,
+            ProductFeatureSeeder::class,
 
 
         ]);
