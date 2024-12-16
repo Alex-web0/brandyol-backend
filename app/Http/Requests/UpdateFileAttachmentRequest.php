@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UpdateFileAttachmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize(Request $request): bool
     {
-        return false;
+        return $request->user()->is_staff_account();
     }
 
     /**
@@ -22,7 +23,7 @@ class UpdateFileAttachmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'file' => 'file|required',
         ];
     }
 }
