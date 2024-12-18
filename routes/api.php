@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorSchemeController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserBanController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\CheckRole;
+use App\Models\Analytics;
 use App\Models\ColorScheme;
 use App\Models\MarketingCampaign;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +82,14 @@ Route::prefix('v1')->group(function () {
             Route::post('/upload', [FileAttachmentController::class, 'store']);
             Route::post('/update/{id}', [FileAttachmentController::class, 'update']);
             Route::delete('/delete/{id}', [FileAttachmentController::class, 'destroy']);
+        }
+    );
+
+
+    /* =======================  ANALYTICS  ======================= */
+    Route::prefix('analytics')->middleware('auth:sanctum')->group(
+        function () {
+            Route::get('/', [AnalyticsController::class, 'index']);
         }
     );
 

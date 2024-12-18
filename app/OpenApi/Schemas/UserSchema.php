@@ -2,6 +2,7 @@
 
 namespace App\OpenApi\Schemas;
 
+use App\Helpers\Helper;
 use GoldSpecDigital\ObjectOrientedOAS\Contracts\SchemaContract;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\AllOf;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\AnyOf;
@@ -21,9 +22,7 @@ class UserSchema extends SchemaFactory implements Reusable
         return Schema::object('User')
             ->properties(
 
-                Schema::integer('id')->required(),
-                Schema::string('created_at')->format(Schema::FORMAT_DATE_TIME)->required(),
-                Schema::string('updated_at')->format(Schema::FORMAT_DATE_TIME)->required(),
+
 
                 Schema::string('full_name')->required(),
                 Schema::string('phone_number')->required(),
@@ -32,6 +31,8 @@ class UserSchema extends SchemaFactory implements Reusable
                 Schema::string('android_token'),
                 Schema::string('ios_token'),
                 Schema::string('web_token'),
+
+                ...Helper::baseResponseSchema(),
             );
     }
 }

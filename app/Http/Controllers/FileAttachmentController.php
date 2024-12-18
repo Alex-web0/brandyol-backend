@@ -111,6 +111,7 @@ class FileAttachmentController extends Controller
      * Remove file from storage
      */
     #[OA\Operation(tags: ['files'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(factory: IDPathParameters::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     #[OA\Response(factory: EmptyResponse::class, statusCode: 200)]

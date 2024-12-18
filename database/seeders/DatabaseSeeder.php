@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Analytics;
 use App\Models\City;
 use App\Models\ContactMethod;
 use App\Models\FileAttachment;
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             UserSeeder::class,
 
-            FileAttachment::class,
+            FileAttachmentSeeder::class,
 
             BrandSeeder::class,
             ColorSchemeSeeder::class,
@@ -34,6 +35,9 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ProductFeatureSeeder::class,
 
+
+            /// MUST STAY THE LAST ONE
+            AnalyticsSeeder::class,
 
         ]);
     }

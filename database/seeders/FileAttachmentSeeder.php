@@ -14,7 +14,7 @@ class FileAttachmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $brands = [
+        $files = [
             [
                 'id' => 1,
                 'user_id' => 1,
@@ -25,17 +25,17 @@ class FileAttachmentSeeder extends Seeder
         ];
 
 
-        foreach ($brands as $brand) {
-            $brand = FileAttachment::updateOrCreate(
+        foreach ($files as $file) {
+            $file = FileAttachment::updateOrCreate(
                 [
-                    'id' => $brand['id']
+                    'id' => $file['id']
                 ],
                 [
-                    'id' => $brand['id'],
-                    'user_id' => $brand['user_id'],
-                    'owner_id' => $brand['owner_id'],
-                    'path' => $brand['path'],
-                    'owner_type' => $brand['owner_type'],
+                    'id' => $file['id'],
+                    'user_id' => $file['user_id'],
+                    'owner_id' => $file['owner_id'],
+                    'path' => $file['path'],
+                    'owner_type' => $file['owner_type'],
                 ],
             );
         }

@@ -113,6 +113,16 @@ class Helper
         );
     }
 
+    /// provides the base times and id for response schemas
+    static public function baseResponseSchema()
+    {
+        return [
+            Schema::integer('id')->required(),
+            Schema::string('created_at')->format(Schema::FORMAT_DATE_TIME)->required(),
+            Schema::string('updated_at')->format(Schema::FORMAT_DATE_TIME)->required(),
+        ];
+    }
+
 
     /// Discount 
     static public string $getDiscountValidator = 'numeric|nullable|min:0.0|max:1.0';
