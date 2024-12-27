@@ -30,6 +30,10 @@ return new class extends Migration
             $table->boolean('banned')->nullable();
             $table->longText('reason')->nullable();
 
+            // For shadow bans
+            $table->boolean('shadow_banned')->default(false)->nullable();
+
+
             $table->rememberToken();
             $table->timestamps();
         });
