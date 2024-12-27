@@ -22,7 +22,20 @@ class GeneralAnalyticsResponse extends ResponseFactory
                 ),
             )->examples(
                 Example::create()->value([
-                    'data' => []
+                    'data' => [
+                        "id" => 1,
+                        "total_sales" => 0,
+                        "estimated_revenue" => 0,
+                        "user_count" => 3,
+                        "transactions_count" => 0,
+                        "brand_count" => 1,
+                        "color_count" => 2,
+                        "completed_orders" => 0,
+                        "pending_orders" => 0,
+                        "total_products" => 2,
+                        "created_at" => "2024-12-27T15:06:41.000000Z",
+                        "updated_at" => "2024-12-27T15:06:41.000000Z"
+                    ]
                 ]),
             )
         )
