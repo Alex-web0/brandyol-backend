@@ -97,7 +97,7 @@ class Helper
     /*
     * Will merge all properties of given schema instances, MUST BE OF SCHEMA OF OBJECTS
     */
-    static public function mergeSchemas(SchemaFactory ...$schemas)
+    static public function mergeSchemas(string $object_name = 'body', SchemaFactory ...$schemas)
     {
         $finalContracts = [];
 
@@ -108,7 +108,7 @@ class Helper
             ];
         }
 
-        return Schema::object('body')->properties(
+        return Schema::object($object_name)->properties(
             ...$finalContracts
         );
     }
