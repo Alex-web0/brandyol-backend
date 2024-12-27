@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ProductFeatureSeeder::class,
 
+            ReviewSeeder::class,
+
 
             /// MUST STAY THE LAST ONE
             AnalyticsSeeder::class,
