@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\ApiHealthController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorSchemeController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\FileAttachmentController;
 use App\Http\Controllers\MarketingCampaignController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductFeatureController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReviewLikingController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\UserBanController;
 use App\Http\Controllers\UsersController;
@@ -21,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 /* =======================  Health  ======================= */
 
-// Route::get('health', [ApiHealthController::class, 'index']);
+Route::get('health', [ApiHealthController::class, 'index']);
 
 /* =======================  V1 API  ======================= */
 
@@ -54,7 +57,7 @@ Route::prefix('v1')->group(function () {
             Route::middleware([CheckRole::class . 'admin,manager'])->group(function () {
                 Route::get('/', [UsersController::class, 'index']);
             });
-            Route::middleware([CheckRole::class . 'admin'])->group(
+            Route::middleware([CheckRole::class . ':admin'])->group(
                 function () {
                     Route::post('/create', [UsersController::class, 'store']);
                     Route::put('/{id}', [UsersController::class, 'update']);
@@ -65,11 +68,12 @@ Route::prefix('v1')->group(function () {
     );
 
     /* =======================  USERS BANS  ======================= */
-    Route::prefix('user-bans')->middleware(['auth:sanctum', CheckRole::class . 'admin'])->group(
+    Route::prefix('user-bans')->middleware(['auth:sanctum', CheckRole::class . ':admin'])->group(
         function () {
 
             Route::post('/{id}/ban', [UserBanController::class, 'banUser']);
             Route::delete('/{id}', [UserBanController::class, 'liftBan']);
+            Route::post('/{id}/shadow-ban', [UserBanController::class, 'changeShadowBanStatus']);
         }
     );
 
@@ -156,6 +160,35 @@ Route::prefix('v1')->group(function () {
                     Route::delete('/{id}', [ProductController::class, 'destroy']);
                 }
             );
+        }
+    );
+
+    /* =======================  REVIEWS  ======================= */
+    Route::prefix('reviews')->middleware('auth:sanctum')->group(
+        function () {
+            // gets all the products 
+            Route::get('/', [ReviewController::class, 'index']);
+            Route::get('/user-listing', [ReviewController::class, 'userListing']);
+
+            Route::post('/', [ReviewController::class, 'store']);
+            Route::put('/{id}', [ReviewController::class, 'update']);
+            Route::delete('/{id}', [ReviewController::class, 'destroy']);
+
+
+
+            // role checked
+            Route::middleware([CheckRole::class . ':admin'])->group(
+                function () {}
+            );
+        }
+    );
+
+
+    /* =======================  REACTIONS & LIKES  ======================= */
+    Route::prefix('reactions/reviews')->middleware('auth:sanctum')->group(
+        function () {
+            Route::post('/{id}', [ReviewLikingController::class, 'likeReview']);
+            Route::delete('/{id}', [ReviewLikingController::class, 'unlikeReview']);
         }
     );
 
