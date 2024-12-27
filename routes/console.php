@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 /// Calls the logging of analytics job, hourly
-Schedule::job(new LogAnalytics)->everyFiveMinutes();
+Schedule::job(new LogAnalytics)->hourly();
