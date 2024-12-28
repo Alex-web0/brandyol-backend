@@ -27,6 +27,8 @@ class PublicReviewResource extends JsonResource
             // full_name is to be loaded eagerly
             'redacted_user_name' => $this->redactUserName($this->user->full_name),
 
+            // TODO: add replies
+            'replies' => 0,
         ];
     }
 }
