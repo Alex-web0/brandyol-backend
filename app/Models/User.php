@@ -31,6 +31,7 @@ class User extends Authenticatable
         /// Bans
         'banned',
         'reason',
+        'shadow_banned',
     ];
 
     /**
@@ -98,5 +99,10 @@ class User extends Authenticatable
     public function userNotifications(): HasMany
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }
