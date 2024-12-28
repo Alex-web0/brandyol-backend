@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
@@ -80,5 +81,16 @@ class Product extends Model
     {
         // TODO: Implement (returns success orders)
         return FileAttachment::where('id', '=', 1);
+    }
+
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function likes(): HasManyThrough
+    {
+        return $this->hasManyThrough(Reaction::class, Review::class);
     }
 }
