@@ -19,6 +19,7 @@ class CreateProductRequestBody extends RequestBodyFactory
         return RequestBody::create()->content(
             MediaType::create()->mediaType('multipart/form-data')->schema(
                 Helper::mergeSchemas(
+                    'body',
                     new ProductSchema(),
                     new InitialProductImagesSchema()
                 ),
