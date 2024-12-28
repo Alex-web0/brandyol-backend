@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BanUserRequest;
 use App\Http\Requests\LiftBanUserRequest;
+use App\Http\Requests\ShadowBanStatusRequest;
 use App\Models\User;
 use App\OpenApi\Parameters\IDPathParameters;
 use App\OpenApi\RequestBodies\BanUserRequestBody;
+use App\OpenApi\RequestBodies\ShadowBanStatusRequestBody;
 use App\OpenApi\Responses\EmptyResponse;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
@@ -63,6 +65,30 @@ class UserBanController extends Controller
             [
                 'banned' => null,
                 'reason' => null,
+            ]
+        );
+
+        return response()->json(null);
+    }
+
+
+    /**
+     * Set Shadow Ban Status
+     *
+     * Will either shadow ban or un shadow ban a user, this is for user generated content appearing or not for other users
+     */
+    #[OA\Operation(tags: ['admin', 'bans'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\RequestBody(factory: ShadowBanStatusRequestBody::class)]
+    #[OA\Parameters(IDPathParameters::class)]
+    #[OA\Response(factory: ForbiddenResponse::class, statusCode: 403)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    #[OA\Response(factory: EmptyResponse::class, statusCode: 200)]
+    public function changeShadowBanStatus($id, ShadowBanStatusRequest $request)
+    {
+        User::findOrFail($id)->update(
+            [
+                'shadow_banned' => $request->shadow_banned
             ]
         );
 
