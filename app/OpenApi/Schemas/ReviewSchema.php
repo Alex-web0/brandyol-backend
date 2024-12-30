@@ -21,7 +21,7 @@ class ReviewSchema extends SchemaFactory implements Reusable
     {
         return Schema::object('review')
             ->properties(
-                RatingSchema::ref(),
+                RatingSchema::ref('rating'),
                 Schema::integer('likes'),
                 Schema::boolean('did_buy'),
                 Schema::string('content'),

@@ -15,13 +15,10 @@ class CreateProductFeatureRequestBody extends RequestBodyFactory
     {
         return RequestBody::create()->content(
             MediaType::json()->schema(
-                Schema::object('body')->properties(
-                    ProductFeatureSchema::ref()->required(
-                        'title',
-                        'value',
-                        'product_id'
-                    )
-
+                ProductFeatureSchema::ref('body')->required(
+                    'title',
+                    'value',
+                    'product_id'
                 )
             )->examples(
                 Example::create('default')->value(

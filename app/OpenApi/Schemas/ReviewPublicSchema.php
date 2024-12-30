@@ -25,7 +25,6 @@ class ReviewPublicSchema extends SchemaFactory implements Reusable
                 Schema::string('redacted_reviewer_name'),
 
                 ...$reviewSchema->properties,
-
             )->required(
                 'redacted_reviewer_name',
                 ...$reviewSchema->required,

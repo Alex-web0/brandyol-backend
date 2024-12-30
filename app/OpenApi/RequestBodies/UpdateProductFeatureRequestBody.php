@@ -15,12 +15,9 @@ class UpdateProductFeatureRequestBody extends RequestBodyFactory
     {
         return RequestBody::create()->content(
             MediaType::json()->schema(
-                Schema::object('body')->properties(
-                    ProductFeatureSchema::ref()->required(
-                        'title',
-                        'value',
-                    )
-
+                ProductFeatureSchema::ref('body')->required(
+                    'title',
+                    'value',
                 )
             )->examples(
                 Example::create('default')->value(

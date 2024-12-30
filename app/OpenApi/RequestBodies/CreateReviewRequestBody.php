@@ -17,7 +17,7 @@ class CreateReviewRequestBody extends RequestBodyFactory
             MediaType::json()->schema(
                 Schema::object('body')->properties(
                     Schema::string('content'),
-                    RatingSchema::ref(),
+                    RatingSchema::ref('rating'),
                 )->required('content', 'ranting')
             )->examples(
                 Example::create('Default')->value(

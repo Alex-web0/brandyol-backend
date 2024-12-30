@@ -41,7 +41,7 @@ class GetReviewsParameters extends ParametersFactory
                 ->name('rating')
                 ->description('Rating double')
                 ->required(false)
-                ->schema(RatingSchema::ref()),
+                ->schema(RatingSchema::ref('rating')),
 
             Parameter::query()
                 ->name('most_likes')
