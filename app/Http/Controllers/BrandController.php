@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\OpenApi\Parameters\GetBrandsParameters;
 use App\OpenApi\Parameters\IDPathParameters;
 use App\OpenApi\RequestBodies\CreateBrandRequestBody;
+use App\OpenApi\RequestBodies\UpdateBrandRequestBody;
 use App\OpenApi\Responses\EmptyResponse;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
@@ -137,7 +138,7 @@ class BrandController extends Controller
      * update a brand
      */
     #[OA\Operation(tags: ['brands'], security: BearerTokenSecurityScheme::class)]
-    #[OA\RequestBody(factory: CreateBrandRequestBody::class)]
+    #[OA\RequestBody(factory: UpdateBrandRequestBody::class)]
     #[OA\Parameters(IDPathParameters::class)]
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
