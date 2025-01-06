@@ -22,6 +22,12 @@ class PaginationParameters extends ParametersFactory implements Reusable
                 ->required(false)
                 ->schema(Schema::integer()),
 
+            Parameter::query()
+                ->name('page')
+                ->description('The page to display')
+                ->required(false)
+                ->schema(Schema::integer()),
+
         ];
     }
 }
