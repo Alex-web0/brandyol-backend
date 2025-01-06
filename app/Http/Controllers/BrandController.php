@@ -62,6 +62,7 @@ class BrandController extends Controller
             $query = $query->where('to_created_at', '=',  $request->to_created_at);
         }
 
+        // add count detector
         $query = $query->withCount("products as products_count");
 
         if (!empty($request->order)) {
