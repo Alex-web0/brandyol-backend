@@ -2207,7 +2207,8 @@
                                                     "created_at",
                                                     "name",
                                                     "description",
-                                                    "image"
+                                                    "image",
+                                                    "products_count"
                                                 ],
                                                 "properties": {
                                                     "id": {
@@ -2233,6 +2234,12 @@
                                                     },
                                                     "image": {
                                                         "type": "string"
+                                                    },
+                                                    "products_count": {
+                                                        "type": "string"
+                                                    },
+                                                    "meta": {
+                                                        "$ref": "#\/components\/schemas\/PaginateMeta"
                                                     }
                                                 }
                                             }
@@ -2332,7 +2339,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "description"
+                                    "description",
+                                    "image"
                                 ],
                                 "properties": {
                                     "name": {
@@ -2367,7 +2375,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "description"
+                                    "description",
+                                    "image"
                                 ],
                                 "properties": {
                                     "name": {
@@ -2492,7 +2501,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "description"
+                                    "description",
+                                    "image"
                                 ],
                                 "properties": {
                                     "name": {
@@ -2527,7 +2537,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "description"
+                                    "description",
+                                    "image"
                                 ],
                                 "properties": {
                                     "name": {

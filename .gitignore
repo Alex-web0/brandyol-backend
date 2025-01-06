@@ -20,3 +20,5 @@ yarn-error.log
 /.vscode
 /.zed
 /dart_client
+openapi.json
+openapitools.json
