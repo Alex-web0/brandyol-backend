@@ -2,7 +2,10 @@
 
 namespace App\OpenApi\Responses;
 
+use App\Helpers\Helper;
+use App\OpenApi\Schemas\ColorSchemeResponseSchema;
 use App\OpenApi\Schemas\ColorSchemeSchema;
+use App\OpenApi\Schemas\EssentialResponseSchema;
 use App\OpenApi\Schemas\PaginateMetaSchema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Example;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
@@ -20,7 +23,7 @@ class GetColorSchemesResponse extends ResponseFactory
                     'response'
                 )->properties(
                     Schema::array('data')->items(
-                        ColorSchemeSchema::ref()
+                        ColorSchemeResponseSchema::ref()
                     ),
                     PaginateMetaSchema::ref('meta'),
                 ),
