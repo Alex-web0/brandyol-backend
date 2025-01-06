@@ -2,6 +2,7 @@
 
 namespace App\OpenApi\Responses;
 
+use App\OpenApi\Schemas\PaginateMetaSchema;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Example;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\MediaType;
 use GoldSpecDigital\ObjectOrientedOAS\Objects\Response;
@@ -16,6 +17,7 @@ class GetBrandsResponse extends ResponseFactory
         return (new PaginateResponse())->build(
             Schema::array('data')->items(
                 Schema::object()->properties(
+
                     Schema::integer('id')->required(),
                     Schema::string('created_at')->format(Schema::FORMAT_DATE_TIME)->required(),
                     Schema::string('updated_at')->format(Schema::FORMAT_DATE_TIME)->required(),
@@ -24,8 +26,11 @@ class GetBrandsResponse extends ResponseFactory
                     Schema::string('name_kr')->nullable(),
                     Schema::string('description'),
                     Schema::string('image'),
+                    Schema::string('products_count'),
 
-                )->required('id', 'created_at', 'name', 'description', 'image')
+                    PaginateMetaSchema::ref('meta'),
+
+                )->required('id', 'created_at', 'name', 'description', 'image', 'products_count')
             ),
             [
                 Example::create('Default')->value(

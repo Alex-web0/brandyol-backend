@@ -17,8 +17,7 @@ class BrandResource extends JsonResource
         return [
             ...parent::toArray($request),
 
-            // todo: add product relationship count
-            'products_count' => 0,
+            // 'products_count' => $this->products(), //added with 
             'image' => empty($this->image()) ? null : $this->image()->url(),
         ];
     }

@@ -62,9 +62,13 @@ class BrandController extends Controller
             $query = $query->where('to_created_at', '=',  $request->to_created_at);
         }
 
+        $query = $query->withCount("products as products_count");
+
         if (!empty($request->order)) {
             $query = $query->orderBy('updated_at', $request->order);
         }
+
+
 
 
         return BrandResource::collection($query->paginate($request->per_page ?? 20));
@@ -140,8 +144,7 @@ class BrandController extends Controller
     #[OA\Response(factory: EmptyResponse::class, statusCode: 200)]
     public function update($id, UpdateBrandRequest $request, Brand $brand)
     {
-
-        Brand::findOrFail($id)->update(
+        (Brand::findOrFail($id))->update(
             [
                 'name' => $request->name,
                 'description' => $request->description,
@@ -163,13 +166,13 @@ class BrandController extends Controller
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     #[OA\Response(factory: EmptyResponse::class, statusCode: 200)]
-    public function destroy(Brand $brand)
+    public function destroy($id, Brand $brand)
     {
         if ($brand->products()->count() > 0) {
             return response('Can not remove item with children', 422);
         }
 
-        Brand::destroy($brand->id);
+        Brand::destroy($id);
 
         return response()->json(null);
     }

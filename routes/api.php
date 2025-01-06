@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function () {
             Route::get('notifications', [UsersController::class, 'notifications']);
 
             /// Staff Only
-            Route::middleware([CheckRole::class . 'admin,manager'])->group(function () {
+            Route::middleware([CheckRole::class . ':admin,manager'])->group(function () {
                 Route::get('/', [UsersController::class, 'index']);
             });
             Route::middleware([CheckRole::class . ':admin'])->group(

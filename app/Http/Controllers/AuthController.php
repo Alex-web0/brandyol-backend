@@ -222,7 +222,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        return new UserResource($user);
+        return  $user;
     }
 
     /**

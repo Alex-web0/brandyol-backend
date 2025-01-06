@@ -19,7 +19,7 @@ class Brand extends Model
 
     public function products(): HasMany
     {
-        throw "UN IMPLEMENTED";
+        return $this->hasMany(Product::class);
     }
 
 
