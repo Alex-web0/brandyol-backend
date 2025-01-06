@@ -26,7 +26,7 @@ class GetBrandsResponse extends ResponseFactory
                     Schema::string('name_kr')->nullable(),
                     Schema::string('description'),
                     Schema::string('image'),
-                    Schema::string('products_count'),
+                    Schema::number('products_count'),
 
                     PaginateMetaSchema::ref('meta'),
 
