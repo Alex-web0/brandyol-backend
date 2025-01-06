@@ -43,6 +43,8 @@ class ColorSchemeController extends Controller
             $query = $query->where('color', '=',  $request->color);
         }
 
+        $query = $query->withCount("products");
+
 
 
         return ColorSchemeResource::collection($query->paginate($request->per_page));

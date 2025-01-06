@@ -17,8 +17,8 @@ class ColorSchemeResource extends JsonResource
         return [
             ...parent::toArray($request),
 
-            // todo: add count from relationship
-            'products_count' => 0,
+            // count added through aggregate
+            // 'products_count' => 0,
         ];
     }
 }

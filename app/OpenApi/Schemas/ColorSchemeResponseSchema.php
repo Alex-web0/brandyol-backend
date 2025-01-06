@@ -21,8 +21,10 @@ class ColorSchemeResponseSchema extends SchemaFactory   implements Reusable
     {
         return Schema::object('ColorSchemeResponse')
             ->properties(
+
+                Schema::number('products_count')->required(),
                 ...((new ColorSchemeSchema())->build()->properties),
-                ...Helper::baseResponseSchema()
+                ...Helper::baseResponseSchema(),
             );
     }
 }
