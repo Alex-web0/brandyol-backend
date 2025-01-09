@@ -18,6 +18,7 @@ use App\OpenApi\Responses\EmptyResponse;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
 use App\OpenApi\Responses\ForbiddenResponse;
+use App\OpenApi\Responses\GetAllUsersResponse;
 use App\OpenApi\Responses\NotificationListingResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Illuminate\Http\Request;
@@ -46,14 +47,14 @@ class UsersController extends Controller
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ForbiddenResponse::class, statusCode: 403)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
-    #[OA\Response(factory: EmptyResponse::class, statusCode: 200)]
+    #[OA\Response(factory: GetAllUsersResponse::class, statusCode: 200)]
     public function index(Request $request)
     {
 
         $phone_number = $request->input('phone_number');
         $full_name = $request->input('full_name');
         $role = $request->input('role');
-        $role = $request->input('gender');
+        $gender = $request->input('gender');
         // $state_id = $request->input('state_id');
 
         $query = empty($role)  ? User::query() : ($role == 'staff' ? User::where(
@@ -74,6 +75,10 @@ class UsersController extends Controller
 
         if (!empty($phone_number)) {
             $query = $query->where('phone_number', '=', $phone_number);
+        }
+
+        if (!empty($gender)) {
+            $query = $query->where('gender', '=', $gender);
         }
 
 

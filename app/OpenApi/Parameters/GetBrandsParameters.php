@@ -30,7 +30,7 @@ class GetBrandsParameters extends ParametersFactory
                 ->name('name')
                 ->description('name of brand')
                 ->required(false)
-                ->schema(Schema::integer()),
+                ->schema(Schema::string()),
             Parameter::query()
                 ->name('from_created_at')
                 ->description('When created')

@@ -16,7 +16,7 @@ class UserRegisterRequestBody extends RequestBodyFactory
             MediaType::json()->schema(
                 Schema::create('body')->properties(
                     Schema::string('phone_number')->required(),
-                    Schema::string('gender')->enum(['male', 'female', 'other'])->required(),
+                    Schema::string('gender')->enum('male', 'female', 'other')->required(),
                     Schema::string('full_name')->required(),
                     Schema::string('otp_method')->enum(['whatsapp', 'sms'])->required(),
                 )

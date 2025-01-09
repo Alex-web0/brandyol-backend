@@ -35,6 +35,7 @@ class ColorSchemeController extends Controller
     public function index(Request $request)
     {
         $query = ColorScheme::query();
+
         if (!empty($request->name)) {
             $query = $query->where('name', 'like', '%' .  $request->name . '%');
         }

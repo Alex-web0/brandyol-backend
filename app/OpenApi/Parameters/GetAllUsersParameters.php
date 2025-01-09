@@ -21,7 +21,7 @@ class GetAllUsersParameters extends ParametersFactory
                 ->name('role')
                 ->description('The role of the users wanted')
                 ->required(false)
-                ->schema(Schema::string('role')->enum(config('roles'), 'staff')),
+                ->schema(Schema::string('role')->enum('staff', ...config('roles'))),
 
             Parameter::query()
                 ->name('phone_number')
@@ -33,7 +33,7 @@ class GetAllUsersParameters extends ParametersFactory
                 ->name('gender')
                 ->description('The gender of the users wanted')
                 ->required(false)
-                ->schema(Schema::string('gender')->enum(['male', 'female', 'other'])),
+                ->schema(Schema::string('gender')->enum('male', 'female', 'other')),
 
             Parameter::query()
                 ->name('full_name')

@@ -57,10 +57,10 @@ class BrandController extends Controller
         }
 
         if (!empty($request->from_created_at)) {
-            $query = $query->where('from_created_at', '=',  $request->from_created_at);
+            $query = $query->where('created_at', '>=',  $request->from_created_at);
         }
         if (!empty($request->to_created_at)) {
-            $query = $query->where('to_created_at', '=',  $request->to_created_at);
+            $query = $query->where('created_at', '<=',  $request->to_created_at);
         }
 
         // add count detector
