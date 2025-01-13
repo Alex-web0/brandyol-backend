@@ -14,6 +14,8 @@ class GetAppBannersParameters extends ParametersFactory
     public function build(): array
     {
         return [
+            ...(new PaginationParameters())->build(),
+
 
             Parameter::query()
                 ->name('parameter-name')

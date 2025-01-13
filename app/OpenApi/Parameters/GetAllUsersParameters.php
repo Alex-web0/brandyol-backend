@@ -16,6 +16,7 @@ class GetAllUsersParameters extends ParametersFactory
         return [
 
 
+            ...(new PaginationParameters())->build(),
 
             Parameter::query()
                 ->name('role')

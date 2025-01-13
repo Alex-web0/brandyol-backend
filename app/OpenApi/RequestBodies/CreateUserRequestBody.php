@@ -16,7 +16,7 @@ class CreateUserRequestBody extends RequestBodyFactory
             MediaType::json()->schema(
                 Schema::create('body')->properties(
                     Schema::string('phone_number'),
-                    Schema::string('role')->enum(config('roles')),
+                    Schema::string('role')->enum(...config('roles')),
                     Schema::string('gender')->enum('male', 'female', 'other'),
                     Schema::string('full_name'),
                     Schema::string('password'),
