@@ -15,7 +15,7 @@ class UpdateUserRequestBody extends RequestBodyFactory
         return RequestBody::create('updateUser')->content(
             MediaType::create()->json()->schema(
                 Schema::object('body')->properties(
-                    Schema::string('role')->enum(config('roles')),
+                    Schema::string('role')->enum(...config('roles')),
                     Schema::string('gender')->enum('male', 'female', 'other'),
                     Schema::string('full_name'),
                 )->required('gender', 'role', 'full_name')
