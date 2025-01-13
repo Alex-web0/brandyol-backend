@@ -55,6 +55,7 @@ class UsersController extends Controller
         $full_name = $request->input('full_name');
         $role = $request->input('role');
         $gender = $request->input('gender');
+        $accountId = $request->input('id');
         // $state_id = $request->input('state_id');
 
         $query = empty($role)  ? User::query() : ($role == 'staff' ? User::where(
@@ -81,13 +82,17 @@ class UsersController extends Controller
             $query = $query->where('gender', '=', $gender);
         }
 
+        if (!empty($accountId)) {
+            $query = $query->where('id', '=', $accountId);
+        }
+
 
         // if (!empty($state_id)) {
         //     $query = $query->where('state_id', '=', $state_id);
         // }
 
 
-        return UserResource::collection($query->paginate());
+        return UserResource::collection($query->paginate($request->input('per_page')));
     }
 
 

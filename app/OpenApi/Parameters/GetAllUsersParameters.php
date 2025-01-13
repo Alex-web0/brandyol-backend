@@ -42,6 +42,12 @@ class GetAllUsersParameters extends ParametersFactory
                 ->required(false)
                 ->schema(Schema::string('full_name')),
 
+            Parameter::query()
+                ->name('id')
+                ->description('The id of the users')
+                ->required(false)
+                ->schema(Schema::number('id')),
+
         ];
     }
 }
