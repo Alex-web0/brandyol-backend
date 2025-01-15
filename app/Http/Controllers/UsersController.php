@@ -21,6 +21,7 @@ use App\OpenApi\Responses\ForbiddenResponse;
 use App\OpenApi\Responses\GetAllUsersResponse;
 use App\OpenApi\Responses\NotificationListingResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -56,6 +57,8 @@ class UsersController extends Controller
         $role = $request->input('role');
         $gender = $request->input('gender');
         $accountId = $request->input('id');
+        $ordersMoreThan = $request->input('orders_more_than');
+        $ordersLessThan = $request->input('orders_less_than');
         // $state_id = $request->input('state_id');
 
         $query = empty($role)  ? User::query() : ($role == 'staff' ? User::where(
@@ -75,7 +78,7 @@ class UsersController extends Controller
 
 
         if (!empty($phone_number)) {
-            $query = $query->where('phone_number', '=', $phone_number);
+            $query = $query->where('phone_number',  'like', '%' . $phone_number . '%');
         }
 
         if (!empty($gender)) {
@@ -86,6 +89,27 @@ class UsersController extends Controller
             $query = $query->where('id', '=', $accountId);
         }
 
+        if (!empty($ordersMoreThan)) {
+            $query = $query->where('id', '=', $accountId);
+        }
+
+        if (!empty($ordersLessThan)) {
+        }
+
+        $query = $query->withCount(
+            [
+                'orders' =>
+                function (Builder $query) {
+                    // if (!empty($ordersLessThan)) {
+                    //     $query =  $query->whereHasMany() < $ordersLessThan;
+                    // }
+                    // if (!empty($ordersLessThan)) {
+                    //     $query =  $query->count() < $ordersLessThan;
+                    // }
+                }
+            ]
+
+        );
 
         // if (!empty($state_id)) {
         //     $query = $query->where('state_id', '=', $state_id);

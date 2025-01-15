@@ -48,6 +48,17 @@ class GetAllUsersParameters extends ParametersFactory
                 ->required(false)
                 ->schema(Schema::number('id')),
 
+            Parameter::query()
+                ->name('orders_more_than')
+                ->description('The sales per capita')
+                ->required(false)
+                ->schema(Schema::number()),
+            Parameter::query()
+                ->name('orders_less_than')
+                ->description('The sales per capita')
+                ->required(false)
+                ->schema(Schema::number()),
+
         ];
     }
 }

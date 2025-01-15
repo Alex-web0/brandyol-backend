@@ -105,4 +105,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function orders(): HasMany
+    {
+        // TODO: fix and add order model relationship
+        return $this->hasMany(Review::class);
+    }
 }

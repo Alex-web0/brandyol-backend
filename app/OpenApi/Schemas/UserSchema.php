@@ -32,6 +32,7 @@ class UserSchema extends SchemaFactory implements Reusable
                 Schema::string('ios_token'),
                 Schema::string('web_token'),
                 Schema::boolean('shadow_banned'),
+                Schema::number('orders_count')->nullable(),
 
                 ...Helper::baseResponseSchema(),
             );
