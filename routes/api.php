@@ -62,6 +62,7 @@ Route::prefix('v1')->group(function () {
                     Route::post('/create', [UsersController::class, 'store']);
                     Route::put('/{id}', [UsersController::class, 'update']);
                     Route::post('/admin-password-reset', [UsersController::class, 'adminPasswordReset']);
+                    Route::get('/user-statistics/{id}', [UsersController::class, 'getUserStatistics']);
                 }
             );
         }

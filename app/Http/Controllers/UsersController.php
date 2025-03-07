@@ -231,9 +231,9 @@ class UsersController extends Controller
 
 
     /**
-     * List All Users
+     * Use Stats
      *
-     * list all users 
+     * get the stats of user statistics
      */
     #[OA\Operation(tags: ['admin'], security: BearerTokenSecurityScheme::class)]
     #[OA\Parameters(IDPathParameters::class)]
