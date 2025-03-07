@@ -29,7 +29,7 @@ class StartCampaignRequestBody extends RequestBodyFactory
                     'from_date_joined' => '2023-10-10',
                     'to_date_joined' => '2023-10-10',
                     'type' => 'notification',
-                    'body' => null,
+                    'body' => 'NULL',
                     'title' => 'We released a new product!!',
                 ]),
                 Example::create('Whatsapp')->value([

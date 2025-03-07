@@ -19,6 +19,7 @@ use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
 use App\OpenApi\Responses\ForbiddenResponse;
 use App\OpenApi\Responses\GetAllUsersResponse;
+use App\OpenApi\Responses\GetUserStatisticsResponse;
 use App\OpenApi\Responses\NotificationListingResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Illuminate\Database\Query\Builder;
@@ -96,10 +97,15 @@ class UsersController extends Controller
         if (!empty($ordersLessThan)) {
         }
 
+
         $query = $query->withCount(
             [
                 'orders' =>
-                function (Builder $query) {
+                function ($query) {
+                    return $query;
+                    // TODO: add ORDER count query builder to get the user count of orders as filteration of range
+                    // ----> 
+
                     // if (!empty($ordersLessThan)) {
                     //     $query =  $query->whereHasMany() < $ordersLessThan;
                     // }
@@ -221,6 +227,31 @@ class UsersController extends Controller
         $user->tokens()->delete();
 
         return response()->json();
+    }
+
+
+    /**
+     * List All Users
+     *
+     * list all users 
+     */
+    #[OA\Operation(tags: ['admin'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(IDPathParameters::class)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ForbiddenResponse::class, statusCode: 403)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    #[OA\Response(factory: GetUserStatisticsResponse::class, statusCode: 200)]
+    public function getUserStatistics($id)
+    {
+        return User::where('id', $id)->withCount(
+            [
+                'orders',
+                'orders as orders_pending_count' => function ($q) {
+                    // match only pending orders
+                },
+                'reviews',
+            ]
+        );
     }
 
 

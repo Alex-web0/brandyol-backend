@@ -41,7 +41,12 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
-    public function store(StoreMarketingCampaignRequest $request) {}
+    public function store(StoreMarketingCampaignRequest $request)
+    {
+        return response();
+        // see how to send notification here 
+        // TODO: https://stackoverflow.com/questions/37490629/firebase-send-notification-with-rest-api
+    }
 
     /**
      * Display the specified resource.
