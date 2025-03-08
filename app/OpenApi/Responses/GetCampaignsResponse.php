@@ -13,36 +13,35 @@ class GetCampaignsResponse extends ResponseFactory
     public function build(): Response
     {
         return (new PaginateResponse())->build(
-            Schema::object('response')->properties(
-                Schema::array('data')->items(
-                    Schema::object()->properties(
+
+            Schema::array('data')->items(
+                Schema::object()->properties(
 
 
 
-                        Schema::integer('id')->required(),
-                        Schema::string('created_at')->format(Schema::FORMAT_DATE_TIME)->required(),
-                        Schema::string('updated_at')->format(Schema::FORMAT_DATE_TIME)->required(),
+                    Schema::integer('id')->required(),
+                    Schema::string('created_at')->format(Schema::FORMAT_DATE_TIME)->required(),
+                    Schema::string('updated_at')->format(Schema::FORMAT_DATE_TIME)->required(),
 
-                        Schema::string('title'),
-                        Schema::string('body')->nullable(),
-                        Schema::string('type')->enum('notification', 'whatsapp'),
-                        Schema::string('gender')->enum('male', 'female', 'other')->nullable(),
-                        Schema::string('image_url')->nullable(),
+                    Schema::string('title'),
+                    Schema::string('body')->nullable(),
+                    Schema::string('type')->enum('notification', 'whatsapp'),
+                    Schema::string('gender')->enum('male', 'female', 'other')->nullable(),
+                    Schema::string('image_url')->nullable(),
 
-                        Schema::number('from_total_orders')->nullable(),
-                        Schema::number('to_total_orders')->nullable(),
-                        Schema::number('sent')->nullable(),
-                        Schema::number('failed')->nullable(),
-
-
+                    Schema::number('from_total_orders')->nullable(),
+                    Schema::number('to_total_orders')->nullable(),
+                    Schema::number('sent')->nullable(),
+                    Schema::number('failed')->nullable(),
 
 
-                    )->required('id', 'created_at', 'title', 'type'),
 
-                ),
-                PaginateMetaSchema::ref('meta'),
+
+                )->required('id', 'created_at', 'title', 'type'),
 
             ),
+
+
 
             [
                 Example::create('Default')->value(
