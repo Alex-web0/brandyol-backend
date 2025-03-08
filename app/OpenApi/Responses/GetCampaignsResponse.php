@@ -28,11 +28,14 @@ class GetCampaignsResponse extends ResponseFactory
                     Schema::string('gender')->enum('male', 'female', 'other')->nullable(),
                     Schema::string('image_url')->nullable(),
 
+                    Schema::number('from_total_orders')->nullable(),
+                    Schema::number('to_total_orders')->nullable(),
 
 
-                    PaginateMetaSchema::ref('meta'),
 
-                )->required('id', 'created_at', 'title', 'type')
+
+                )->required('id', 'created_at', 'title', 'type'),
+                PaginateMetaSchema::ref('meta'),
             ),
             [
                 Example::create('Default')->value(

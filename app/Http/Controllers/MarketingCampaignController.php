@@ -9,6 +9,7 @@ use App\OpenApi\Parameters\PaginationParameters;
 use App\OpenApi\RequestBodies\StartCampaignRequestBody;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
+use App\OpenApi\Responses\GetCampaignsResponse;
 use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
@@ -26,7 +27,7 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
-    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 200)]
+    #[OA\Response(factory: GetCampaignsResponse::class, statusCode: 200)]
     public function index()
     {
         //
@@ -52,6 +53,9 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     public function store(StoreMarketingCampaignRequest $request)
     {
+
+        // store it into the database 
+        MarketingCampaign::create($request->validated());
         return response();
         // see how to send notification here 
         // TODO: https://stackoverflow.com/questions/37490629/firebase-send-notification-with-rest-api

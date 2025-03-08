@@ -25,6 +25,9 @@ class StoreMarketingCampaignRequest extends FormRequest
         return [
             'from_date_joined' => 'date|nullable',
             'to_date_joined' => 'date|nullable',
+            'from_total_orders' => 'numeric|nullable',
+            'to_total_orders' => 'numeric|nullable',
+            'image' => 'image|nullable',
             'title' => 'string|required',
             'body' => 'string|nullable',
             'type' => 'string|in:notification,whatsapp|required',
