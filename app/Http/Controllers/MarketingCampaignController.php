@@ -17,6 +17,7 @@ use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use App\Services\PushNotificationService;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
@@ -34,9 +35,11 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     #[OA\Response(factory: GetCampaignsResponse::class, statusCode: 200)]
-    public function index()
+    public function index(Request $request)
     {
-        return MarketingCampaign::query()->paginate();
+        return MarketingCampaign::query()->paginate(
+            $request->input('per_page'),
+        );
     }
 
     /**
