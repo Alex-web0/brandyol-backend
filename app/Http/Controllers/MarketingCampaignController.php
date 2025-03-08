@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Http\Requests\ExtractUserDataRequest;
 use App\Http\Requests\StoreMarketingCampaignRequest;
 use App\Http\Requests\UpdateMarketingCampaignRequest;
@@ -14,6 +15,8 @@ use App\OpenApi\Responses\ErrorValidationResponse;
 use App\OpenApi\Responses\GetCampaignsResponse;
 use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
+use App\Services\PushNotificationService;
+use Exception;
 use Illuminate\Http\Response;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
@@ -33,7 +36,7 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: GetCampaignsResponse::class, statusCode: 200)]
     public function index()
     {
-        //
+        return MarketingCampaign::query()->paginate();
     }
 
     /**
@@ -55,10 +58,90 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     public function store(StoreMarketingCampaignRequest $request)
+
     {
+        $marketingCampaign = $request->validated();
+
+        $image = $request->file('image');
+        $type = $marketingCampaign['type'];
+
+        error_log(empty($request->file('image')));
+
+        // enumerate target users query
+        $query = User::query()->withCount('orders');
+
+        if (!empty($request->from_date_joined)) {
+            $query = $query->where('created_at', '>=', $request->from_date_joined);
+        }
+        if (!empty($request->to_date_joined)) {
+            $query = $query->where('created_at', '<=', $request->to_date_joined);
+        }
+        if (!empty($request->gender)) {
+            $query = $query->where('gender', '=', $request->gender);
+        }
+        if (!empty($request->from_total_orders)) {
+            $query = $query->whereHas(
+                'orders',
+                function ($query) {},
+                '>=',
+                $request->from_total_orders
+            );
+        }
+        if (!empty($request->to_total_orders)) {
+            $query = $query->whereHas(
+                'orders',
+                function ($query) {},
+                '<=',
+                $request->to_total_orders
+            );
+        }
+
+
+        // image upload
+        $urlOfImage = null;
+
+        if (!empty($image)) {
+            $urlOfImage = Helper::getPublicUrl(Helper::upload($image));
+        }
+
+        $counterSent = 0;
+        $counterFailed = 0;
+
+        // actual sending
+        if ($type == 'notification') {
+            $resultCollection = $query->get();
+
+            foreach ($resultCollection as $result) {
+
+                try {
+                    PushNotificationService::sendPushNotification(
+                        $result,
+                        $marketingCampaign['title'],
+                        $marketingCampaign['body'] ?? '',
+                        null,
+                        true,
+                        (empty($urlOfImage) ? null : $urlOfImage),
+                    );
+                    $counterSent++;
+                } catch (Exception $c) {
+                    $counterFailed++;
+                    // error_log($c);
+                }
+            }
+
+            error_log("sent to {$counterSent}, failed {$counterFailed}");
+        } else if ($type == 'whatsapp') {
+            // TODO: implement what's app sending
+            error_log("WHATS APP MESSAGES NOT IMPLEMENTED");
+        }
 
         // store it into the database 
-        MarketingCampaign::create(($request->validated()));
+        MarketingCampaign::create([
+            ...$marketingCampaign,
+            'sent' => $counterSent,
+            'failed' => $counterFailed,
+            'image_url' => $urlOfImage
+        ]);
         return response()->json(null);
         // see how to send notification here 
         // TODO: https://stackoverflow.com/questions/37490629/firebase-send-notification-with-rest-api
@@ -119,6 +202,7 @@ class MarketingCampaignController extends Controller
 
         $list = User::where('role', '=', 'customer')
             ->withCount('orders', 'reviews')
+            ->select(User::getExtractableDataArray())
             ->get()
             ->toArray();
 

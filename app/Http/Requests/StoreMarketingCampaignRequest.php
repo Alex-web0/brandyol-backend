@@ -27,10 +27,11 @@ class StoreMarketingCampaignRequest extends FormRequest
             'to_date_joined' => 'date|nullable',
             'from_total_orders' => 'numeric|nullable',
             'to_total_orders' => 'numeric|nullable',
-            'image' => 'image|nullable',
+            'image' => 'nullable',
             'title' => 'string|required',
             'body' => 'string|nullable',
             'type' => 'string|in:notification,whatsapp|required',
+            'gender' => 'string|in:male,female,other|nullable',
         ];
     }
 }

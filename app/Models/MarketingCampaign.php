@@ -18,6 +18,10 @@ class MarketingCampaign extends Model
         'to_date_joined',
         'gender',
         'from_total_orders',
-        'to_total_orders'
+        'to_total_orders',
+
+        'sent',
+        'failed',
+        'image_url',
     ];
 }

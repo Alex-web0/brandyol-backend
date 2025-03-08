@@ -26,6 +26,15 @@ class Helper
     }
 
 
+    /*
+        gets a public and hopefully persistant URL of a public file or resource
+        using its given path
+        [only tested for AWS]
+    */
+    static public function getPublicUrl(string $path)
+    {
+        return Storage::disk('s3')->url($path);
+    }
     /**
      * Removes a file with path from default storage disk
      * -------------

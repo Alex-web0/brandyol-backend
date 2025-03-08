@@ -9,7 +9,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 
 class PushNotificationService
 {
-    static public function sendPushNotification(User $toUser, string $title, string $body, int $order_id = null, bool $condition = true)
+    static public function sendPushNotification(User $toUser, string $title, string $body, int $order_id = null,  bool $condition = true, string $image_url = null,)
     {
         if (!$condition) return;
         $user = $toUser;
@@ -37,7 +37,8 @@ class PushNotificationService
             'priority' => 'high',
             'notification' => [
                 'title' => $title,
-                'body' => $body
+                'body' => $body,
+                'image' => $image_url
             ],
             'data' => [
                 'type' => 'status_update'

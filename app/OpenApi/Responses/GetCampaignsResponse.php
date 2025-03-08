@@ -30,6 +30,8 @@ class GetCampaignsResponse extends ResponseFactory
 
                     Schema::number('from_total_orders')->nullable(),
                     Schema::number('to_total_orders')->nullable(),
+                    Schema::number('sent')->nullable(),
+                    Schema::number('failed')->nullable(),
 
 
 

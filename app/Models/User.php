@@ -34,6 +34,20 @@ class User extends Authenticatable
         'shadow_banned',
     ];
 
+    static public function getExtractableDataArray()
+    {
+        return
+            [
+                'id',
+                'created_at',
+                'full_name',
+                'phone_number',
+                'gender',
+                'banned',
+                'shadow_banned',
+            ];
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -55,6 +69,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'banned' => 'boolean',
+            'shadow_banned' => 'boolean',
         ];
     }
 

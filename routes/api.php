@@ -198,6 +198,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('campaigns')->middleware('auth:sanctum')->group(
         function () {
             Route::post('/', [MarketingCampaignController::class, 'store']);
+            Route::get('/', [MarketingCampaignController::class, 'index']);
             Route::get('/extract-user-data', [MarketingCampaignController::class, 'extractUserData']);
         }
     );
