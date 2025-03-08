@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMarketingCampaignRequest;
 use App\Http\Requests\UpdateMarketingCampaignRequest;
 use App\Models\MarketingCampaign;
+use App\OpenApi\Parameters\PaginationParameters;
 use App\OpenApi\RequestBodies\StartCampaignRequestBody;
 use App\OpenApi\Responses\ErrorUnAuthenticatedResponse;
 use App\OpenApi\Responses\ErrorValidationResponse;
@@ -16,8 +17,16 @@ use Vyuldashev\LaravelOpenApi\Attributes as OA;
 class MarketingCampaignController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get Paginated marketing campaigns 
+     *
+     * past campaigns
      */
+    #[OA\Operation(tags: ['campaigns'], security: BearerTokenSecurityScheme::class)]
+    #[OA\Parameters(factory: PaginationParameters::class)]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
+    #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
+    #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 200)]
     public function index()
     {
         //

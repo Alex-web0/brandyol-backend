@@ -19,7 +19,11 @@ class StartCampaignRequestBody extends RequestBodyFactory
                     Schema::string('to_date_joined')->format(Schema::FORMAT_DATE)->nullable(),
                     Schema::string('title'),
                     Schema::string('body')->nullable(),
-                    Schema::string('type')->enum(['notification', 'whatsapp']),
+                    Schema::string('type')->enum('notification', 'whatsapp'),
+                    Schema::string('gender')->enum('male', 'female', 'other')->nullable(),
+                    Schema::number('from_total_orders')->nullable(),
+                    Schema::number('to_total_orders')->nullable(),
+                    Schema::string('image')->format('binary')->nullable(),
                 )->required(
                     'title',
                     'type'
