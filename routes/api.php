@@ -195,9 +195,10 @@ Route::prefix('v1')->group(function () {
 
 
     /* =======================  MARKETING CAMPAIGNS  ======================= */
-    Route::prefix('campaigns')->group(
+    Route::prefix('campaigns')->middleware('auth:sanctum')->group(
         function () {
             Route::post('/', [MarketingCampaignController::class, 'store']);
+            Route::get('/extract-user-data', [MarketingCampaignController::class, 'extractUserData']);
         }
     );
 });

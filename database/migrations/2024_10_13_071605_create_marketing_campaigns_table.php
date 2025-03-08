@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('marketing_campaigns', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('body');
+            $table->string('type');
+            $table->date('from_date_joined')->nullable();
+            $table->date('to_date_joined')->nullable();
+            $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->integer('from_total_orders')->nullable();
+            $table->integer('to_total_orders')->nullable();
+
             $table->timestamps();
         });
     }
