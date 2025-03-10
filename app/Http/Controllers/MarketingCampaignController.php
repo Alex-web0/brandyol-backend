@@ -18,6 +18,7 @@ use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use App\Services\PushNotificationService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
@@ -37,9 +38,9 @@ class MarketingCampaignController extends Controller
     #[OA\Response(factory: GetCampaignsResponse::class, statusCode: 200)]
     public function index(Request $request)
     {
-        return MarketingCampaign::query()->paginate(
+        return JsonResource::collection(MarketingCampaign::query()->paginate(
             $request->input('per_page'),
-        );
+        ));
     }
 
     /**
@@ -104,7 +105,9 @@ class MarketingCampaignController extends Controller
         $urlOfImage = null;
 
         if (!empty($image)) {
-            $urlOfImage = Helper::getPublicUrl(Helper::upload($image));
+            // TODO: MAKE FILE PUBLIC WORKS SINCE NOW IT FAILS AND RETURNS NO KEY
+            // https://stackoverflow.com/questions/28653249/amazon-s3-exception-the-specified-key-does-not-exist
+            $urlOfImage = Helper::getPublicUrl(Helper::upload($image, 'public'));
         }
 
         $counterSent = 0;

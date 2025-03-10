@@ -25,6 +25,7 @@ use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
 use function Illuminate\Log\log;
@@ -86,7 +87,7 @@ class ReviewController extends Controller
             'product'
         ])->withCount(['likes as likes']);
 
-        return $query->paginate();
+        return  JsonResource::collection($query->paginate());
     }
 
 

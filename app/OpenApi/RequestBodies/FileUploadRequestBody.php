@@ -16,7 +16,9 @@ class FileUploadRequestBody extends RequestBodyFactory implements Reusable
         return RequestBody::create('file_upload_request')->content(
             MediaType::create()->mediaType('multipart/form-data')->schema(
                 Schema::object('body')->properties(
-                    Schema::string('file')->format('binary')->required()
+                    Schema::string('file')->format('binary')->required(),
+                    /// will override the file being saved to this particular path MODEL instead of going for an id
+                    Schema::string('path_override')->nullable(),
                 )->required('file')
             )->examples(
                 Example::create('Default')->value(

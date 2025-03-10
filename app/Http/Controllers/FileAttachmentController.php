@@ -19,6 +19,7 @@ use App\OpenApi\Responses\NotFoundResponse;
 use App\OpenApi\SecuritySchemes\BearerTokenSecurityScheme;
 use App\Services\FileAttachmentStorageService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Vyuldashev\LaravelOpenApi\Attributes as OA;
 
 #[OA\PathItem]
@@ -40,7 +41,7 @@ class FileAttachmentController extends Controller
             $query = $query->where('owner_type', '=', $request->owner_type);
         }
 
-        return $query->paginate();
+        return JsonResource::collection($query->paginate());
     }
 
     /**
@@ -98,9 +99,22 @@ class FileAttachmentController extends Controller
     #[OA\Response(factory: ErrorValidationResponse::class, statusCode: 422)]
     #[OA\Response(factory: ErrorUnAuthenticatedResponse::class, statusCode: 401)]
     #[OA\Response(factory: ForbiddenResponse::class, statusCode: 403)]
+    #[OA\Response(factory: NotFoundResponse::class, statusCode: 404)]
     #[OA\Response(factory: EmptyResponse::class)]
     public function update($id, UpdateFileAttachmentRequest $request, FileAttachment $fileAttachment)
     {
+
+        if (!empty($request->path_override)) {
+            $idOfPathOverrideAllocated = FileAttachment::where('path', '=', $request->path_override)->select(['id'])->first();
+            if (empty($idOfPathOverrideAllocated)) return response()->json(
+                [
+                    'message' => __('errors.path_not_found'),
+                ],
+                404
+            );
+            FileAttachmentStorageService::replaceFile($request->file, $idOfPathOverrideAllocated->id);
+            return response()->json(null);
+        }
 
         FileAttachmentStorageService::replaceFile($request->file, $id);
     }

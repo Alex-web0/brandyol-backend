@@ -14,11 +14,11 @@ use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
 
 class Helper
 {
-    static public function upload($file): string
+    static public function upload($file, string $privacy = 'private'): string
     {
         $fileName = time() . '_' . $file->getClientOriginalName(); // Generate a unique filename
         $filePath = 'uploads/' . $fileName; // Define the path where the file will be stored in S3
-        $didUpload = Storage::disk()->put($filePath, file_get_contents($file), 'private'); // Upload the file
+        $didUpload = Storage::disk()->put($filePath, file_get_contents($file), $privacy ?? 'private'); // Upload the file
         $urlPath = Storage::disk()->path($filePath); // Get the URL of the uploaded file
 
         // Optionally, store the file path in your database or return it as a response

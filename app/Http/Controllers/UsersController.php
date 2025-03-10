@@ -312,7 +312,7 @@ class UsersController extends Controller
         $user = $request->user();
         $query = User::findOrFail($user->id)->userNotifications();
 
-        return new JsonResource(
+        return  JsonResource::collection(
             $query->orderBy('created_at', 'desc')->paginate(),
         );
     }

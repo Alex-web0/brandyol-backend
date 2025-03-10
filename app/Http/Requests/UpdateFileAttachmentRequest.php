@@ -24,6 +24,7 @@ class UpdateFileAttachmentRequest extends FormRequest
     {
         return [
             'file' => 'file|required',
+            'path_override' => 'string|nullable'
         ];
     }
 }
