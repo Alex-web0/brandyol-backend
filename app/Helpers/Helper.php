@@ -138,4 +138,20 @@ class Helper
 
     /// Image Place holder
     static public string $placeholderImageUrl = 'https://placehold.co/600x400/EEE/31343C?font=raleway&text=Error';
+
+
+    /// ============== APP SECTION ==============
+    static public function banner_type()
+    {
+        return Schema::string('banner_type')->enum('carousel_item', 'banner_16_by_19', 'banner_16_by_7', 'banner_square');
+    }
+    static public function section()
+    {
+        return Schema::string('section')->enum('default', 'special_offers', 'brands', 'brandyol_special');
+    }
+
+    static public function type()
+    {
+        return Schema::string('type')->enum('brand', 'product', 'url', ' no_action');
+    }
 }

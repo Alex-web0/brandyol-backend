@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ApiHealthController;
+use App\Http\Controllers\AppSectionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorSchemeController;
@@ -190,6 +191,15 @@ Route::prefix('v1')->group(function () {
         function () {
             Route::post('/{id}', [ReviewLikingController::class, 'likeReview']);
             Route::delete('/{id}', [ReviewLikingController::class, 'unlikeReview']);
+        }
+    );
+
+    /* =======================  APP SECTIONS MANAGEMENT  ======================= */
+    Route::prefix('app_sections')->middleware('auth:sanctum')->group(
+        function () {
+            Route::get('/', [AppSectionController::class, 'index']);
+            Route::post('/{id}', [AppSectionController::class, 'store']);
+            Route::delete('/{id}', [AppSectionController::class, 'destroy']);
         }
     );
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Analytics;
+use App\Models\AppSection;
 use App\Models\City;
 use App\Models\ContactMethod;
 use App\Models\FileAttachment;
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
             ProductFeatureSeeder::class,
 
             ReviewSeeder::class,
+            AppSectionSeeder::class,
 
 
             /// MUST STAY THE LAST ONE
