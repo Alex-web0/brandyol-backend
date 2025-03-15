@@ -198,7 +198,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('app_sections')->middleware('auth:sanctum')->group(
         function () {
             Route::get('/', [AppSectionController::class, 'index']);
-            Route::post('/{id}', [AppSectionController::class, 'store']);
+            Route::post('/', [AppSectionController::class, 'store']);
             Route::delete('/{id}', [AppSectionController::class, 'destroy']);
         }
     );
