@@ -42,6 +42,32 @@ class AnalyticsSeeder extends Seeder
                 'pending_orders' => 0,
                 'total_products' => Product::count(),
             ],
+            [
+                'id' => 3,
+                'total_sales' => 0, // TODO: add sales query
+                'estimated_revenue' => 0,
+                'user_count' => User::count(),
+                'transactions_count' => 0,
+                'brand_count' => Brand::count(),
+                'color_count' => ColorScheme::count(),
+                'completed_orders' => 0,
+                'pending_orders' => 0,
+                'total_products' => Product::count(),
+                'created_at' => '2025-03-20',
+            ],
+            [
+                'id' => 4,
+                'total_sales' => 23, // TODO: add sales query
+                'estimated_revenue' => 2000,
+                'user_count' => User::count() + 10,
+                'transactions_count' => 0 + 10,
+                'brand_count' => Brand::count() + 10,
+                'color_count' => ColorScheme::count() + 10,
+                'completed_orders' => 0 + 10,
+                'pending_orders' => 0 + 3,
+                'total_products' => Product::count() + 10,
+                'created_at' => '2025-03-20',
+            ],
         ];
 
 

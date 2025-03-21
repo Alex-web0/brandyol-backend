@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+
         Schema::create('app_sections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -20,6 +22,7 @@ return new class extends Migration
             $table->integer('brand_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->string('url')->nullable();
+
             $table->timestamps();
         });
     }

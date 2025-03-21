@@ -22,6 +22,7 @@ class AppSectionSeeder extends Seeder
                 'brand_id' => null,
                 'product_id' => null,
                 'url' => null,
+
             ],
             [
                 'id' => 2,
@@ -32,6 +33,7 @@ class AppSectionSeeder extends Seeder
                 'brand_id' => null,
                 'product_id' => null,
                 'url' => null,
+
             ],
         ];
 
